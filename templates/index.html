@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{{ title }}</title>
+  <meta name="description" content="{{ data.opening_message }}" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="{{ title }}" />
+  <meta property="og:description" content="{{ data.opening_message }}" />
+  <meta property="og:image" content="/images/og-image.jpg" />
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="vi_VN" />
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="{{ title }}" />
+  <meta name="twitter:description" content="{{ data.opening_message }}" />
+  <meta name="twitter:image" content="/images/og-image.jpg" />
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=Dancing+Script:wght@700&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind CSS CDN with exact theme config -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'indigo-deep':  '#183A3A',
+            'red-son':      '#9E3D32',
+            'paper-yellow': '#F4E8D2',
+            'ink-brown':    '#3A2D26',
+            'jade-light':   '#78928A',
+            'ivory':        '#FFF9EE',
+          },
+          fontFamily: {
+            serif:  ['var(--font-serif)', 'Georgia', 'serif'],
+            sans:   ['var(--font-sans)', 'sans-serif'],
+            script: ['var(--font-script)', 'cursive'],
+          },
+          animation: {
+            'fade-in-up': 'fadeInUp 0.6s ease-out forwards',
+          },
+          keyframes: {
+            fadeInUp: {
+              '0%':   { opacity: '0', transform: 'translateY(20px)' },
+              '100%': { opacity: '1', transform: 'translateY(0)' },
+            },
+          },
+        },
+      },
+    }
+  </script>
+  <link rel="stylesheet" href="/css/globals.css" />
+</head>
+<body class="bg-ivory text-ink-brown font-sans antialiased">
+  <!-- Header -->
+  <header>
+    <a
+      href="#main-content"
+      class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-indigo-deep focus:text-ivory focus:rounded-sm focus:font-sans focus:text-sm"
+    >
+      Bo qua toi noi dung chinh
+    </a>
+  </header>
+
+  <main id="main-content">
+    <!-- 1. HeroInvitation -->
+    <section
+      class="relative min-h-screen flex flex-col items-center justify-center overflow-hidden bg-indigo-deep paper-noise"
+      aria-label="Thiep moi cuoi"
+    >
+      <div class="relative z-10 w-full max-w-xs mx-auto px-6 text-center">
+        <!-- Envelope view -->
+        <div id="hero-envelope" class="flex flex-col items-center gap-6">
+          <svg viewBox="0 0 200 140" fill="none" aria-hidden="true" class="w-44 opacity-85">
+            <rect x="4" y="4" width="192" height="132" rx="6"
+              fill="#F4E8D2" fill-opacity="0.08"
+              stroke="#F4E8D2" stroke-width="1" stroke-opacity="0.25" />
+            <path d="M4 4 L100 76 L196 4"
+              stroke="#F4E8D2" stroke-width="1" stroke-opacity="0.35" fill="none" />
+            <path d="M4 136 L68 80 M196 136 L132 80"
+              stroke="#F4E8D2" stroke-width="1" stroke-opacity="0.25" />
+            <circle cx="100" cy="76" r="18" fill="#9E3D32" fill-opacity="0.85" />
+            <text x="100" y="81" text-anchor="middle" fill="#F4E8D2" font-size="15" font-family="serif">
+              &#10085;
+            </text>
+          </svg>
+
+          <p class="font-serif italic text-paper-yellow/60 text-xs tracking-[0.3em] uppercase">
+            Thiep Moi
+          </p>
+          <p class="font-script text-paper-yellow/70" style="font-size: 1.6rem;">
+            {{ data.bride.short_name }} &amp; {{ data.groom.short_name }}
+          </p>
+
+          <button
+            id="open-invitation-btn"
+            type="button"
+            class="mt-2 px-7 py-3 border border-paper-yellow/40 text-paper-yellow font-sans text-sm tracking-widest uppercase hover:bg-paper-yellow/10 transition-colors rounded-sm min-h-[44px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-paper-yellow/50"
+            aria-label="Mo thiep cuoi"
+          >
+            Mo Thiep
+          </button>
+        </div>
+
+        <!-- Revealed content -->
+        <div id="hero-content" class="hidden flex-col items-center gap-5">
+          <p class="hero-stagger-item font-serif italic text-paper-yellow/55 text-xs tracking-[0.35em] uppercase">
+            Tran trong kinh moi
+          </p>
+
+          <div class="hero-stagger-item space-y-0.5">
+            <h1 class="font-script text-paper-yellow leading-snug" style="font-size: clamp(2.6rem, 9vw, 4.2rem);">
+              {{ data.bride.short_name }}
+            </h1>
+            <p class="font-serif text-paper-yellow/40 text-xl" aria-hidden="true">&amp;</p>
+            <h1 class="font-script text-paper-yellow leading-snug" style="font-size: clamp(2.6rem, 9vw, 4.2rem);">
+              {{ data.groom.short_name }}
+            </h1>
+          </div>
+
+          <div class="hero-stagger-item">
+            <div class="vn-pattern opacity-30" data-width="220" data-height="20" data-color="#F4E8D2"></div>
+          </div>
+
+          <p class="hero-stagger-item font-serif italic text-paper-yellow/65 text-base max-w-xs leading-relaxed px-2">
+            &ldquo;{{ data.quote }}&rdquo;
+          </p>
+
+          <p id="hero-formatted-date" class="hero-stagger-item font-sans text-paper-yellow/75 text-sm tracking-wide"></p>
+
+          <div class="hero-stagger-item">
+            <svg viewBox="0 0 120 52" fill="none" aria-hidden="true" class="w-28 opacity-35 mx-auto">
+              <ellipse cx="60" cy="42" rx="14" ry="6" fill="#F4E8D2" opacity="0.5" />
+              <path d="M60 40 Q48 22 38 26 Q50 34 60 40Z" fill="#F4E8D2" opacity="0.5" />
+              <path d="M60 40 Q72 22 82 26 Q70 34 60 40Z" fill="#F4E8D2" opacity="0.44" />
+              <path d="M60 40 Q46 12 52 8 Q57 24 60 40Z" fill="#F4E8D2" opacity="0.38" />
+              <path d="M60 40 Q74 12 68 8 Q63 24 60 40Z" fill="#F4E8D2" opacity="0.32" />
+              <path d="M60 40 Q40 16 42 6 Q50 22 60 40Z" fill="#F4E8D2" opacity="0.26" />
+              <path d="M60 40 Q80 16 78 6 Q70 22 60 40Z" fill="#F4E8D2" opacity="0.20" />
+            </svg>
+          </div>
+
+          <a
+            href="#rsvp"
+            class="hero-stagger-item inline-flex items-center justify-center px-6 py-3 border border-paper-yellow/35 text-paper-yellow/75 font-sans text-xs tracking-widest uppercase hover:bg-paper-yellow/10 transition-colors rounded-sm min-h-[44px]"
+          >
+            Xac nhan tham du &darr;
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. OpeningMessage -->
+    <section class="py-20 bg-ivory" aria-label="Loi ngo">
+      <div class="reveal-item max-w-xl mx-auto px-6 text-center">
+        <div class="vn-pattern mx-auto mb-8 opacity-45" data-width="240" data-height="26" data-color="#78928A"></div>
+
+        <p class="font-serif text-xl md:text-2xl text-ink-brown leading-relaxed italic">
+          {{ data.opening_message }}
+        </p>
+
+        <div class="vn-pattern mx-auto mt-8 opacity-45" style="transform: rotate(180deg);" data-width="240" data-height="26" data-color="#78928A"></div>
+      </div>
+    </section>
+
+    <!-- 3. CoupleStory -->
+    <section class="py-20 bg-white/50" aria-label="Cau chuyen chung minh">
+      <div class="max-w-2xl mx-auto px-6">
+        <div class="text-center mb-12">
+          <div class="vn-pattern mx-auto mb-4 opacity-50" data-width="200" data-height="22" data-color="#78928A"></div>
+          <div class="w-10 h-px mx-auto mb-4 bg-jade-light/50" aria-hidden="true"></div>
+          <h2 class="font-serif text-3xl md:text-4xl tracking-wide text-ink-brown">Chuyen Chung Minh</h2>
+          <p class="mt-3 font-sans text-sm tracking-wide text-jade-light">Nhung khoanh khac dang nho</p>
+          <div class="w-10 h-px mx-auto mt-4 bg-jade-light/50" aria-hidden="true"></div>
+        </div>
+
+        <div class="relative mt-10">
+          <div class="absolute left-1/2 top-0 bottom-0 w-px bg-jade-light/25 -translate-x-1/2" aria-hidden="true"></div>
+          <div class="flex flex-col gap-10">
+            {% for m in data.story %}
+            <div class="flex items-center gap-0 md:gap-4 {% if loop.index0 % 2 == 0 %}flex-row{% else %}flex-row-reverse{% endif %}">
+              <div class="flex-1 {% if loop.index0 % 2 == 0 %}reveal-left{% else %}reveal-right{% endif %}" style="transition-delay: {{ loop.index0 * 80 }}ms;">
+                <div class="bg-paper-yellow border border-paper-yellow/60 rounded-sm p-5 shadow-sm {% if loop.index0 % 2 == 0 %}mr-4 md:mr-8{% else %}ml-4 md:ml-8{% endif %}">
+                  <div class="flex items-center gap-3 mb-2">
+                    <span class="text-xl" role="img" aria-label="{{ m.title }}">{{ m.emoji }}</span>
+                    <span class="bg-red-son text-ivory text-xs font-sans font-semibold px-3 py-1 rounded-sm tracking-wide">
+                      {{ m.year }}
+                    </span>
+                  </div>
+                  <h3 class="font-serif text-xl text-ink-brown mb-1.5">{{ m.title }}</h3>
+                  <p class="font-sans text-sm text-ink-brown/70 leading-relaxed">{{ m.description }}</p>
+                </div>
+              </div>
+
+              <div class="flex-shrink-0 w-3.5 h-3.5 rounded-full bg-red-son border-2 border-ivory shadow-md relative z-10" aria-hidden="true"></div>
+              <div class="flex-1 hidden md:block" aria-hidden="true"></div>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. WeddingDetails -->
+    <section class="py-20 bg-paper-yellow/25" aria-label="Thong tin hon le">
+      <div class="max-w-2xl mx-auto px-6">
+        <div class="vn-pattern mx-auto mb-8 opacity-35" data-width="280" data-height="26" data-color="#78928A"></div>
+
+        <div class="text-center mb-12">
+          <div class="vn-pattern mx-auto mb-4 opacity-50" data-width="200" data-height="22" data-color="#78928A"></div>
+          <div class="w-10 h-px mx-auto mb-4 bg-jade-light/50" aria-hidden="true"></div>
+          <h2 class="font-serif text-3xl md:text-4xl tracking-wide text-ink-brown">Thong Tin Hon Le</h2>
+          <p class="mt-3 font-sans text-sm tracking-wide text-jade-light">Ngay trong dai cua chung toi</p>
+          <div class="w-10 h-px mx-auto mt-4 bg-jade-light/50" aria-hidden="true"></div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {% for ev in data.events %}
+          <article
+            class="reveal-item bg-ivory border border-paper-yellow/80 rounded-sm p-6 shadow-sm"
+            style="transition-delay: {{ loop.index0 * 140 }}ms;"
+            aria-label="{{ ev.title }}"
+          >
+            <h3 class="font-serif text-2xl text-red-son mb-4 pb-3 border-b border-paper-yellow">
+              {{ ev.title }}
+            </h3>
+
+            <ul class="space-y-3 mb-6">
+              <li class="flex items-start gap-3">
+                <svg class="w-4 h-4 text-jade-light mt-0.5 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/></svg>
+                <span class="font-sans text-sm text-ink-brown">{{ ev.date }}</span>
+              </li>
+              <li class="flex items-center gap-3">
+                <svg class="w-4 h-4 text-jade-light flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                <span class="font-sans text-sm text-ink-brown">{{ ev.time }}</span>
+              </li>
+              <li class="flex items-start gap-3">
+                <svg class="w-4 h-4 text-jade-light mt-0.5 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+                <div>
+                  <p class="font-sans text-sm font-medium text-ink-brown">{{ ev.venue }}</p>
+                  <p class="font-sans text-xs text-ink-brown/55 mt-0.5">{{ ev.address }}</p>
+                </div>
+              </li>
+            </ul>
+
+            <div class="flex flex-wrap gap-3">
+              <button
+                type="button"
+                onclick="generateICS({{ loop.index0 }})"
+                class="inline-flex items-center justify-center gap-2 rounded-sm font-sans font-medium transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-son focus-visible:ring-offset-2 border-2 border-indigo-deep text-indigo-deep hover:bg-indigo-deep hover:text-ivory active:scale-95 px-4 py-2 text-sm min-h-[36px]"
+                aria-label="Them {{ ev.title }} vao lich"
+              >
+                <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/></svg>
+                Them vao lich
+              </button>
+
+              <a
+                href="{{ ev.map_url }}"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="inline-flex items-center gap-2 px-4 py-2 text-sm font-sans text-jade-light border border-jade-light/40 rounded-sm hover:bg-jade-light/10 transition-colors min-h-[36px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-jade-light"
+                aria-label="Chi duong den {{ ev.venue }}"
+              >
+                <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="3 11 22 2 13 21 11 13 3 11"/></svg>
+                Chi duong
+              </a>
+            </div>
+          </article>
+          {% endfor %}
+        </div>
+
+        <div class="vn-pattern mx-auto mt-10 opacity-35" data-width="280" data-height="26" data-color="#78928A"></div>
+      </div>
+    </section>
+
+    <!-- 5. Countdown -->
+    <section class="py-20 bg-indigo-deep paper-noise" aria-label="Dem nguoc den ngay cuoi">
+      <div class="relative z-10 max-w-xl mx-auto px-6">
+        <div class="text-center mb-12">
+          <div class="vn-pattern mx-auto mb-4 opacity-50" data-width="200" data-height="22" data-color="#F4E8D2"></div>
+          <div class="w-10 h-px mx-auto mb-4 bg-jade-light/40" aria-hidden="true"></div>
+          <h2 class="font-serif text-3xl md:text-4xl tracking-wide text-paper-yellow">Dem Nguoc</h2>
+          <p class="mt-3 font-sans text-sm tracking-wide text-jade-light">Ngay trong dai sap den</p>
+          <div class="w-10 h-px mx-auto mt-4 bg-jade-light/40" aria-hidden="true"></div>
+        </div>
+
+        <div id="countdown-finished" class="hidden text-center font-serif text-3xl text-paper-yellow italic mt-4">
+          Chuc mung hanh phuc! &#127800;
+        </div>
+
+        <div id="countdown-grid" class="flex items-end justify-center gap-3 md:gap-5 mt-6" aria-live="polite" aria-atomic="true">
+          <div class="flex flex-col items-center">
+            <div class="bg-indigo-deep/80 border border-jade-light/20 rounded-sm px-4 py-3 min-w-[64px] text-center overflow-hidden">
+              <span id="cd-days" class="font-serif text-3xl md:text-4xl text-red-son block">00</span>
+            </div>
+            <span class="font-sans text-xs text-jade-light mt-2 tracking-widest uppercase">Ngay</span>
+          </div>
+          <span class="font-serif text-2xl text-jade-light/60 mb-7" aria-hidden="true">:</span>
+
+          <div class="flex flex-col items-center">
+            <div class="bg-indigo-deep/80 border border-jade-light/20 rounded-sm px-4 py-3 min-w-[64px] text-center overflow-hidden">
+              <span id="cd-hours" class="font-serif text-3xl md:text-4xl text-red-son block">00</span>
+            </div>
+            <span class="font-sans text-xs text-jade-light mt-2 tracking-widest uppercase">Gio</span>
+          </div>
+          <span class="font-serif text-2xl text-jade-light/60 mb-7" aria-hidden="true">:</span>
+
+          <div class="flex flex-col items-center">
+            <div class="bg-indigo-deep/80 border border-jade-light/20 rounded-sm px-4 py-3 min-w-[64px] text-center overflow-hidden">
+              <span id="cd-minutes" class="font-serif text-3xl md:text-4xl text-red-son block">00</span>
+            </div>
+            <span class="font-sans text-xs text-jade-light mt-2 tracking-widest uppercase">Phut</span>
+          </div>
+          <span class="font-serif text-2xl text-jade-light/60 mb-7" aria-hidden="true">:</span>
+
+          <div class="flex flex-col items-center">
+            <div class="bg-indigo-deep/80 border border-jade-light/20 rounded-sm px-4 py-3 min-w-[64px] text-center overflow-hidden">
+              <span id="cd-seconds" class="font-serif text-3xl md:text-4xl text-red-son block">00</span>
+            </div>
+            <span class="font-sans text-xs text-jade-light mt-2 tracking-widest uppercase">Giay</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6. RSVPForm -->
+    <section id="rsvp" class="py-20 bg-white/40" aria-label="Xac nhan tham du">
+      <div class="max-w-lg mx-auto px-6">
+        <div class="text-center mb-12">
+          <div class="vn-pattern mx-auto mb-4 opacity-50" data-width="200" data-height="22" data-color="#78928A"></div>
+          <div class="w-10 h-px mx-auto mb-4 bg-jade-light/50" aria-hidden="true"></div>
+          <h2 class="font-serif text-3xl md:text-4xl tracking-wide text-ink-brown">Xac Nhan Tham Du</h2>
+          <p class="mt-3 font-sans text-sm tracking-wide text-jade-light">Hoi am truoc 10/01/2027</p>
+          <div class="w-10 h-px mx-auto mt-4 bg-jade-light/50" aria-hidden="true"></div>
+        </div>
+
+        <div id="rsvp-success" class="hidden text-center py-14" role="status" aria-live="polite">
+          <svg class="w-16 h-16 text-jade-light mx-auto mb-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>
+          <h3 class="font-serif text-2xl text-ink-brown mb-2">Cam on ban!</h3>
+          <p class="font-sans text-jade-light">
+            Chung toi da nhan duoc xac nhan. Hen gap ban vao ngay trong dai!
+          </p>
+        </div>
+
+        <form id="rsvp-form" novalidate class="space-y-5">
+          <div>
+            <label for="rsvp-name" class="block font-sans text-sm font-medium text-ink-brown mb-1.5">
+              Ho va ten <span aria-hidden="true" class="text-red-son">*</span>
+            </label>
+            <input
+              id="rsvp-name" type="text" autocomplete="name"
+              aria-required="true"
+              class="w-full px-4 py-3 font-sans text-base text-ink-brown bg-ivory border border-paper-yellow rounded-sm focus:outline-none focus:ring-2 focus:ring-red-son/40 transition-colors min-h-[44px]"
+              placeholder="Nguyen Van A"
+            />
+            <p id="err-name" role="alert" class="hidden mt-1 text-xs text-red-son"></p>
+          </div>
+
+          <div>
+            <label for="rsvp-phone" class="block font-sans text-sm font-medium text-ink-brown mb-1.5">
+              So dien thoai <span aria-hidden="true" class="text-red-son">*</span>
+            </label>
+            <input
+              id="rsvp-phone" type="tel" autocomplete="tel" inputmode="numeric"
+              aria-required="true"
+              class="w-full px-4 py-3 font-sans text-base text-ink-brown bg-ivory border border-paper-yellow rounded-sm focus:outline-none focus:ring-2 focus:ring-red-son/40 transition-colors min-h-[44px]"
+              placeholder="0901234567"
+            />
+            <p id="err-phone" role="alert" class="hidden mt-1 text-xs text-red-son"></p>
+          </div>
+
+          <div>
+            <label for="rsvp-guests" class="block font-sans text-sm font-medium text-ink-brown mb-1.5">
+              So nguoi di cung
+            </label>
+            <select
+              id="rsvp-guests"
+              class="w-full px-4 py-3 font-sans text-base text-ink-brown bg-ivory border border-paper-yellow rounded-sm focus:outline-none focus:ring-2 focus:ring-red-son/40 transition-colors min-h-[44px]"
+            >
+              <option value="1">1 nguoi</option>
+              <option value="2">2 nguoi</option>
+              <option value="3">3 nguoi</option>
+              <option value="4">4 nguoi</option>
+              <option value="5">5 nguoi</option>
+            </select>
+          </div>
+
+          <fieldset>
+            <legend class="block font-sans text-sm font-medium text-ink-brown mb-2">
+              Xac nhan <span aria-hidden="true" class="text-red-son">*</span>
+            </legend>
+            <div class="space-y-2.5">
+              <label class="flex items-center gap-3 cursor-pointer min-h-[44px] group">
+                <input type="radio" name="attending" value="yes" checked class="w-4 h-4 accent-red-son" />
+                <span class="font-sans text-sm text-ink-brown group-hover:text-red-son transition-colors">
+                  Rat han hanh tham du
+                </span>
+              </label>
+              <label class="flex items-center gap-3 cursor-pointer min-h-[44px] group">
+                <input type="radio" name="attending" value="no" class="w-4 h-4 accent-red-son" />
+                <span class="font-sans text-sm text-ink-brown group-hover:text-red-son transition-colors">
+                  Xin gui loi chuc
+                </span>
+              </label>
+            </div>
+          </fieldset>
+
+          <div>
+            <label for="rsvp-msg" class="block font-sans text-sm font-medium text-ink-brown mb-1.5">
+              Loi nhan (khong bat buoc)
+            </label>
+            <textarea
+              id="rsvp-msg" rows="3"
+              class="w-full px-4 py-3 font-sans text-base text-ink-brown bg-ivory border border-paper-yellow rounded-sm focus:outline-none focus:ring-2 focus:ring-red-son/40 transition-colors min-h-[44px] resize-none"
+              placeholder="Loi chuc cua ban..."
+            ></textarea>
+          </div>
+
+          <p id="rsvp-error" role="alert" class="hidden text-sm text-red-son">Co loi xay ra. Vui long thu lai.</p>
+
+          <button
+            id="rsvp-submit-btn"
+            type="submit"
+            class="w-full inline-flex items-center justify-center gap-2 rounded-sm font-sans font-medium transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-son focus-visible:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed bg-red-son text-ivory hover:bg-[#8a3429] active:scale-95 px-8 py-4 text-lg min-h-[52px]"
+          >
+            Gui xac nhan
+          </button>
+        </form>
+      </div>
+    </section>
+
+    <!-- 7. PhotoGallery -->
+    {% if !data.gallery.is_empty() %}
+    <section class="py-20 bg-ivory" aria-label="Album anh cuoi">
+      <div class="max-w-3xl mx-auto px-6">
+        <div class="text-center mb-12">
+          <div class="vn-pattern mx-auto mb-4 opacity-50" data-width="200" data-height="22" data-color="#78928A"></div>
+          <div class="w-10 h-px mx-auto mb-4 bg-jade-light/50" aria-hidden="true"></div>
+          <h2 class="font-serif text-3xl md:text-4xl tracking-wide text-ink-brown">Album Anh</h2>
+          <p class="mt-3 font-sans text-sm tracking-wide text-jade-light">Nhung khoanh khac dep</p>
+          <div class="w-10 h-px mx-auto mt-4 bg-jade-light/50" aria-hidden="true"></div>
+        </div>
+
+        <div class="columns-2 md:columns-3 gap-3 mt-8">
+          {% for photo in data.gallery %}
+          <button
+            type="button"
+            onclick="openLightbox({{ loop.index0 }})"
+            style="transition-delay: {{ loop.index0 * 50 }}ms;"
+            class="reveal-item block mb-3 w-full overflow-hidden rounded-sm group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-son focus-visible:ring-offset-2"
+            aria-label="Xem anh: {{ photo.alt }}"
+          >
+            <div class="relative overflow-hidden bg-paper-yellow/20">
+              <img
+                src="{{ photo.src }}"
+                alt="{{ photo.alt }}"
+                width="{{ photo.width }}"
+                height="{{ photo.height }}"
+                class="w-full h-auto object-cover transition-transform duration-500 group-hover:scale-105"
+                loading="lazy"
+                onerror="this.parentElement.innerHTML='<div class=\'w-full aspect-square bg-paper-yellow/30 flex items-center justify-center\'><svg class=\'w-8 h-8 text-jade-light/40\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'currentColor\' stroke-width=\'2\' stroke-linecap=\'round\' stroke-linejoin=\'round\' aria-hidden=\'true\'><line x1=\'2\' x2=\'22\' y1=\'2\' y2=\'22\'/><path d=\'M10.41 10.41a2 2 0 1 1-2.83-2.83\'/><line x1=\'13.5\' x2=\'6\' y1=\'13.5\' y2=\'21\'/><line x1=\'18\' x2=\'21\' y1=\'12\' y2=\'15\'/><path d=\'M3.59 3.59A1.99 1.99 0 0 0 3 5v14a2 2 0 0 0 2 2h14c.55 0 1.052-.22 1.41-.59\'/><path d=\'M21 15V5a2 2 0 0 0-2-2H9\'/></svg></div>'"
+              />
+            </div>
+          </button>
+          {% endfor %}
+        </div>
+      </div>
+
+      <!-- Lightbox -->
+      <div
+        id="lightbox"
+        class="hidden fixed inset-0 z-50 bg-black/90 items-center justify-center p-4"
+        role="dialog"
+        aria-modal="true"
+        aria-label="Xem anh"
+      >
+        <button
+          id="lb-close"
+          type="button"
+          class="absolute top-4 right-4 w-11 h-11 flex items-center justify-center text-white/70 hover:text-paper-yellow transition-colors rounded-full"
+          aria-label="Dong"
+        >
+          <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+        </button>
+
+        <button
+          id="lb-prev"
+          type="button"
+          class="absolute left-3 top-1/2 -translate-y-1/2 w-11 h-11 flex items-center justify-center text-white/70 hover:text-paper-yellow transition-colors"
+          aria-label="Anh truoc"
+        >
+          <svg class="w-8 h-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+        </button>
+
+        <div id="lb-img-wrap" class="relative max-h-[82vh] max-w-lg w-full">
+          <img id="lb-img" src="" alt="" class="object-contain w-full h-full max-h-[82vh] rounded-sm" />
+        </div>
+
+        <button
+          id="lb-next"
+          type="button"
+          class="absolute right-3 top-1/2 -translate-y-1/2 w-11 h-11 flex items-center justify-center text-white/70 hover:text-paper-yellow transition-colors"
+          aria-label="Anh tiep theo"
+        >
+          <svg class="w-8 h-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+        </button>
+
+        <p id="lb-counter" class="absolute bottom-4 left-1/2 -translate-x-1/2 text-white/40 text-sm font-sans"></p>
+      </div>
+    </section>
+    {% endif %}
+
+    <!-- 8. WishBook -->
+    <section class="py-20 bg-paper-yellow/15" aria-label="So luu but">
+      <div class="max-w-xl mx-auto px-6">
+        <div class="text-center mb-12">
+          <div class="vn-pattern mx-auto mb-4 opacity-50" data-width="200" data-height="22" data-color="#78928A"></div>
+          <div class="w-10 h-px mx-auto mb-4 bg-jade-light/50" aria-hidden="true"></div>
+          <h2 class="font-serif text-3xl md:text-4xl tracking-wide text-ink-brown">So Luu But</h2>
+          <p class="mt-3 font-sans text-sm tracking-wide text-jade-light">De lai loi chuc cho chung toi</p>
+          <div class="w-10 h-px mx-auto mt-4 bg-jade-light/50" aria-hidden="true"></div>
+        </div>
+
+        <form id="wish-form" novalidate class="space-y-4 mb-12">
+          <div>
+            <label for="wn" class="block font-sans text-sm font-medium text-ink-brown mb-1.5">
+              Ten cua ban <span aria-hidden="true" class="text-red-son">*</span>
+            </label>
+            <input
+              id="wn" type="text"
+              aria-required="true"
+              class="w-full px-4 py-3 font-sans text-base text-ink-brown bg-ivory border border-paper-yellow rounded-sm focus:outline-none focus:ring-2 focus:ring-jade-light/40 transition-colors min-h-[44px]"
+              placeholder="Nguyen Thi B"
+            />
+            <p id="wn-err" role="alert" class="hidden mt-1 text-xs text-red-son"></p>
+          </div>
+
+          <div>
+            <label for="wm" class="block font-sans text-sm font-medium text-ink-brown mb-1.5">
+              Loi chuc <span aria-hidden="true" class="text-red-son">*</span>
+            </label>
+            <textarea
+              id="wm" rows="4" maxlength="300"
+              aria-required="true"
+              class="w-full px-4 py-3 font-sans text-base text-ink-brown bg-ivory border border-paper-yellow rounded-sm focus:outline-none focus:ring-2 focus:ring-jade-light/40 transition-colors min-h-[44px] resize-none"
+              placeholder="Chuc hai ban tram nam hanh phuc..."
+            ></textarea>
+            <div class="flex justify-between mt-1">
+              <p id="wm-err" role="alert" class="hidden text-xs text-red-son"></p>
+              <span id="wm-hint" class="text-xs text-transparent">hint</span>
+              <span id="wm-count" class="text-xs text-ink-brown/35">0/300</span>
+            </div>
+          </div>
+
+          <p id="wish-error" role="alert" class="hidden text-sm text-red-son">Co loi. Vui long thu lai.</p>
+
+          <p id="wish-success" class="hidden text-jade-light font-sans text-sm text-center py-2" aria-live="polite">
+            &#10003; Loi chuc da duoc ghi nhan. Cam on ban!
+          </p>
+
+          <div id="wish-btn-wrap">
+            <button
+              id="wish-submit-btn"
+              type="submit"
+              class="w-full inline-flex items-center justify-center gap-2 rounded-sm font-sans font-medium transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-son focus-visible:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed border-2 border-indigo-deep text-indigo-deep hover:bg-indigo-deep hover:text-ivory active:scale-95 px-6 py-3 text-base min-h-[44px]"
+            >
+              Gui loi chuc
+            </button>
+          </div>
+        </form>
+
+        <div id="wishes-list" class="space-y-5" aria-live="polite" aria-label="Danh sach loi chuc"></div>
+      </div>
+    </section>
+
+    <!-- 9. GiftCard -->
+    <section class="py-20 bg-paper-yellow/10" aria-label="Thong tin mung cuoi">
+      <div class="relative paper-noise max-w-xl mx-auto px-6">
+        <div class="relative z-10">
+          <div class="text-center mb-12">
+            <div class="vn-pattern mx-auto mb-4 opacity-50" data-width="200" data-height="22" data-color="#78928A"></div>
+            <div class="w-10 h-px mx-auto mb-4 bg-jade-light/50" aria-hidden="true"></div>
+            <h2 class="font-serif text-3xl md:text-4xl tracking-wide text-ink-brown">Mung Cuoi</h2>
+            <div class="w-10 h-px mx-auto mt-4 bg-jade-light/50" aria-hidden="true"></div>
+          </div>
+
+          <p class="text-center font-serif italic text-ink-brown/55 text-base -mt-6 mb-10">
+            Su hien dien cua quy vi la mon qua tran quy nhat
+          </p>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            {% for a in data.bank_accounts %}
+            <div class="bg-ivory border border-paper-yellow rounded-sm p-6 text-center">
+              <div class="relative w-36 h-36 mx-auto mb-4 bg-paper-yellow/25 rounded-sm overflow-hidden flex items-center justify-center">
+                <img
+                  src="{{ a.qr_src }}"
+                  alt="QR ngan hang cua {{ a.owner }}"
+                  class="w-full h-full object-contain p-2"
+                  onerror="this.parentElement.innerHTML='<svg class=\'w-10 h-10 text-jade-light/30\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'currentColor\' stroke-width=\'2\' stroke-linecap=\'round\' stroke-linejoin=\'round\' aria-hidden=\'true\'><line x1=\'2\' x2=\'22\' y1=\'2\' y2=\'22\'/><path d=\'M10.41 10.41a2 2 0 1 1-2.83-2.83\'/><line x1=\'13.5\' x2=\'6\' y1=\'13.5\' y2=\'21\'/><line x1=\'18\' x2=\'21\' y1=\'12\' y2=\'15\'/><path d=\'M3.59 3.59A1.99 1.99 0 0 0 3 5v14a2 2 0 0 0 2 2h14c.55 0 1.052-.22 1.41-.59\'/><path d=\'M21 15V5a2 2 0 0 0-2-2H9\'/></svg>'"
+                />
+              </div>
+
+              <p class="font-serif text-lg text-ink-brown">{{ a.owner }}</p>
+              <p class="font-sans text-sm text-jade-light mt-1">{{ a.bank }}</p>
+
+              <div class="flex items-center justify-center gap-2 mt-3">
+                <p class="font-sans font-medium text-ink-brown tracking-widest">{{ a.account_number }}</p>
+                <button
+                  type="button"
+                  onclick="copyAccount('{{ a.account_number }}', this)"
+                  class="w-9 h-9 flex items-center justify-center text-jade-light hover:text-red-son transition-colors rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-son"
+                  aria-label="Sao chep so tai khoan"
+                  aria-pressed="false"
+                >
+                  <svg class="copy-icon w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+                  <svg class="check-icon hidden w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+                </button>
+              </div>
+
+              <p class="copied-msg hidden text-xs text-jade-light mt-1 animate-fade-in-up" aria-live="polite">
+                Da sao chep!
+              </p>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 10. Footer -->
+    <footer class="py-16 bg-indigo-deep text-center paper-noise" role="contentinfo">
+      <div class="relative z-10">
+        <div class="vn-pattern mx-auto mb-8 opacity-25" data-width="200" data-height="24" data-color="#F4E8D2"></div>
+
+        <p class="font-serif italic text-paper-yellow/70 text-lg mb-6 max-w-sm mx-auto px-6 leading-relaxed">
+          Cam on quy vi da danh thoi gian chia se niem vui cung chung toi.
+        </p>
+
+        <div class="flex items-center justify-center gap-4">
+          <p class="font-script text-paper-yellow leading-tight" style="font-size: 2rem;">
+            {{ data.bride.short_name }}
+          </p>
+          <span class="font-serif text-paper-yellow/40 text-xl" aria-hidden="true">&amp;</span>
+          <p class="font-script text-paper-yellow leading-tight" style="font-size: 2rem;">
+            {{ data.groom.short_name }}
+          </p>
+        </div>
+
+        <p class="mt-8 font-sans text-xs text-jade-light/50">
+          &copy; {{ current_year }} &middot; Thiep cuoi online
+        </p>
+      </div>
+    </footer>
+  </main>
+
+  <!-- FloatingActions -->
+  <nav
+    class="fixed bottom-4 left-1/2 -translate-x-1/2 z-40 flex items-center gap-1 bg-indigo-deep/95 backdrop-blur-sm rounded-full px-4 py-2 shadow-xl border border-jade-light/10"
+    aria-label="Hanh dong nhanh"
+  >
+    <a
+      href="#rsvp"
+      class="flex items-center gap-2 text-ivory font-sans text-sm font-medium min-h-[44px] px-3 hover:text-paper-yellow transition-colors rounded-full hover:bg-white/5"
+      aria-label="Xac nhan tham du"
+    >
+      <svg class="w-4 h-4 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/></svg>
+      <span class="hidden sm:inline">RSVP</span>
+    </a>
+
+    <div class="w-px h-5 bg-ivory/15" aria-hidden="true"></div>
+
+    <a
+      href="{{ first_map_url }}"
+      target="_blank"
+      rel="noopener noreferrer"
+      class="flex items-center gap-2 text-ivory font-sans text-sm font-medium min-h-[44px] px-3 hover:text-paper-yellow transition-colors rounded-full hover:bg-white/5"
+      aria-label="Chi duong den dia diem"
+    >
+      <svg class="w-4 h-4 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="3 11 22 2 13 21 11 13 3 11"/></svg>
+      <span class="hidden sm:inline">Chi duong</span>
+    </a>
+
+    <div class="w-px h-5 bg-ivory/15" aria-hidden="true"></div>
+
+    <button
+      id="share-btn"
+      type="button"
+      class="flex items-center gap-2 text-ivory font-sans text-sm font-medium min-h-[44px] px-3 hover:text-paper-yellow transition-colors rounded-full hover:bg-white/5"
+      aria-label="Chia se thiep cuoi"
+    >
+      <svg class="w-4 h-4 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" x2="15.42" y1="13.51" y2="17.49"/><line x1="15.41" x2="8.59" y1="6.51" y2="10.49"/></svg>
+      <span class="hidden sm:inline">Chia se</span>
+    </button>
+  </nav>
+
+  <!-- MusicToggle -->
+  <audio id="bg-music" src="{{ data.music_url }}" loop preload="none" aria-hidden="true"></audio>
+  <button
+    id="music-toggle-btn"
+    type="button"
+    class="fixed bottom-[5.5rem] right-4 z-40 w-11 h-11 rounded-full bg-indigo-deep/90 text-ivory flex items-center justify-center shadow-lg hover:bg-indigo-deep transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-son focus-visible:ring-offset-2"
+    aria-label="Bat nhac nen"
+    aria-pressed="false"
+  >
+    <svg id="music-on-icon" class="hidden w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+    <svg id="music-off-icon" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="22" x2="16" y1="9" y2="15"/><line x1="16" x2="22" y1="9" y2="15"/></svg>
+  </button>
+
+  <script>
+    window.__WEDDING_CONFIG__ = {
+      weddingDate: "{{ data.wedding_date }}",
+      events: {{ events_json|safe }},
+      gallery: {{ gallery_json|safe }}
+    };
+  </script>
+  <script src="/js/app.js"></script>
+</body>
+</html>

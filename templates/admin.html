@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Trang quan tri | Thiep Cuoi</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="min-h-screen bg-gray-50 p-6 md:p-10 font-sans">
+  <div id="admin-loading" class="p-8 text-center text-gray-500">Dang tai...</div>
+
+  <div id="admin-content" class="hidden">
+    <h1 class="text-3xl font-bold text-gray-800 mb-8">Trang quan tri</h1>
+
+    <section class="mb-12">
+      <h2 id="rsvp-heading" class="text-xl font-semibold mb-4 text-gray-700">
+        Xac nhan tham du (0)
+      </h2>
+      <div class="overflow-x-auto rounded-lg shadow bg-white">
+        <table class="w-full text-sm">
+          <thead class="bg-gray-100 text-gray-600">
+            <tr>
+              <th class="px-4 py-3 text-left font-medium">Ten</th>
+              <th class="px-4 py-3 text-left font-medium">SDT</th>
+              <th class="px-4 py-3 text-left font-medium">So khach</th>
+              <th class="px-4 py-3 text-left font-medium">Tham du</th>
+              <th class="px-4 py-3 text-left font-medium">Loi nhan</th>
+              <th class="px-4 py-3 text-left font-medium">Thoi gian</th>
+            </tr>
+          </thead>
+          <tbody id="rsvp-tbody"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section>
+      <h2 class="text-xl font-semibold mb-4 text-gray-700">Loi chuc</h2>
+      <div id="wishes-admin-list" class="space-y-3"></div>
+    </section>
+  </div>
+
+  <script>
+    function escapeHtml(str) {
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+    }
+
+    async function approveWish(id) {
+      const res = await fetch('/api/wishes', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id }),
+      });
+      if (res.ok) {
+        loadAdminData();
+      }
+    }
+
+    async function loadAdminData() {
+      try {
+        const [rd, wd] = await Promise.all([
+          fetch('/api/rsvp').then((r) => r.json()),
+          fetch('/api/wishes?all=true').then((r) => r.json()),
+        ]);
+
+        const rsvps = rd.submissions || [];
+        const wishes = wd.wishes || [];
+
+        document.getElementById('rsvp-heading').textContent = `Xac nhan tham du (${rsvps.length})`;
+        const tbody = document.getElementById('rsvp-tbody');
+        if (rsvps.length === 0) {
+          tbody.innerHTML = '<tr><td colspan="6" class="px-4 py-10 text-center text-gray-400">Chua co xac nhan nao.</td></tr>';
+        } else {
+          tbody.innerHTML = rsvps.map((r) => `
+            <tr class="border-t hover:bg-gray-50">
+              <td class="px-4 py-3 font-medium">${escapeHtml(r.name)}</td>
+              <td class="px-4 py-3">${escapeHtml(r.phone)}</td>
+              <td class="px-4 py-3 text-center">${Number(r.guestCount) || 1}</td>
+              <td class="px-4 py-3">
+                <span class="px-2 py-1 rounded-full text-xs font-medium ${r.attending === 'yes' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}">
+                  ${r.attending === 'yes' ? 'Co mat' : 'Vang mat'}
+                </span>
+              </td>
+              <td class="px-4 py-3 text-gray-500 max-w-xs truncate">${escapeHtml(r.message || '')}</td>
+              <td class="px-4 py-3 text-gray-400 text-xs">${new Date(r.submittedAt).toLocaleString('vi-VN')}</td>
+            </tr>
+          `).join('');
+        }
+
+        const wishesList = document.getElementById('wishes-admin-list');
+        if (wishes.length === 0) {
+          wishesList.innerHTML = '<p class="text-gray-400 text-center py-10">Chua co loi chuc nao.</p>';
+        } else {
+          wishesList.innerHTML = wishes.map((w) => `
+            <div class="bg-white rounded-lg shadow p-4 flex justify-between items-start gap-4">
+              <div class="min-w-0">
+                <p class="font-semibold text-gray-800">${escapeHtml(w.name)}</p>
+                <p class="text-gray-600 mt-1 text-sm">${escapeHtml(w.message)}</p>
+                <p class="text-xs text-gray-400 mt-2">${new Date(w.createdAt).toLocaleString('vi-VN')}</p>
+              </div>
+              ${!w.approved
+                ? `<button onclick="approveWish('${escapeHtml(w.id)}')" class="flex-shrink-0 px-3 py-1.5 bg-green-600 text-white rounded text-sm hover:bg-green-700 transition-colors">Duyet</button>`
+                : `<span class="flex-shrink-0 text-xs text-green-600 bg-green-50 px-2 py-1 rounded">Da duyet</span>`
+              }
+            </div>
+          `).join('');
+        }
+
+        document.getElementById('admin-loading').classList.add('hidden');
+        document.getElementById('admin-content').classList.remove('hidden');
+      } catch (err) {
+        document.getElementById('admin-loading').textContent = 'Co loi khi tai du lieu.';
+      }
+    }
+
+    loadAdminData();
+  </script>
+</body>
+</html>
